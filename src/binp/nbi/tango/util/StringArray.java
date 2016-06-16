@@ -1,8 +1,10 @@
+package binp.nbi.tango.util;
+
 
 
 public class StringArray {
 
-    static boolean contains(String[] array, String item) {
+    public static boolean contains(String[] array, String item) {
         for (String s : array) {
             if (s.equals(item)) {
                 return true;
@@ -11,7 +13,7 @@ public class StringArray {
         return false;
     }
 
-    static boolean matches(String[] array, String item) {
+    public static boolean matches(String[] array, String item) {
         for (String s : array) {
             if (s.matches(item)) {
                 return true;
@@ -20,7 +22,7 @@ public class StringArray {
         return false;
     }
 
-    static int indexOf(String[] array, String item) {
+    public static int indexOf(String[] array, String item) {
         if (array == null || array.length <= 0) {
             return -1;
         }
@@ -32,7 +34,7 @@ public class StringArray {
         return -1;
     }
 
-    static int indexOfMatch(String[] array, String item) {
+    public static int indexOfMatch(String[] array, String item) {
         if (array == null || array.length <= 0) {
             return -1;
         }
