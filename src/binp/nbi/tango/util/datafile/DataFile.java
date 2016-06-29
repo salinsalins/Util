@@ -19,7 +19,7 @@ import java.util.Formatter;
  */
 public class DataFile extends File {
 
-    DataFile(String fileName) {
+    public DataFile(String fileName) {
         super(todayFolder(true), fileName);
     }
 
