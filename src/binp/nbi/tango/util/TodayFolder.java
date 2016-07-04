@@ -3,27 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package binp.nbi.tango.util.txtdatafile;
+package binp.nbi.tango.util;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Formatter;
 
 /**
  *
- * @author sanin
+ * @author Sanin
  */
-public class TxtDataFile extends File {
-
-    TxtDataFile(String fileName) {
-        super(todayFolder(),fileName);
-    }
+public class TodayFolder extends File {
     
-    TxtDataFile() {
-        this("data.txt");
+    TodayFolder(String fileName){
+        super(todayFolder(true), fileName);
     }
     
     public static File todayFolder(boolean make) {
@@ -40,8 +33,5 @@ public class TxtDataFile extends File {
         return todayFolder(true);
     }
 
-    public Formatter getFormatter() throws IOException {
-        FileWriter fw = new FileWriter(this, true);
-        return new Formatter(fw);
-    }
+    
 }
