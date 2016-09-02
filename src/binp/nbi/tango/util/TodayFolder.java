@@ -15,15 +15,15 @@ import java.util.Date;
  */
 public class TodayFolder extends File {
     
-    TodayFolder(String baseDir, boolean make){
+    public TodayFolder(String baseDir, boolean make){
         super(todayFolder(baseDir, make).getAbsolutePath());
     }
     
-    TodayFolder(String baseDir){
+    public TodayFolder(String baseDir){
         this(baseDir, true);
     }
     
-    TodayFolder(){
+    public TodayFolder(){
         this(null, true);
     }
 
