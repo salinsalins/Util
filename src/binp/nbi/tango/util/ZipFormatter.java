@@ -1,28 +1,43 @@
 package binp.nbi.tango.util;
 
 import java.io.BufferedOutputStream;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.Flushable;
 import java.io.IOException;
 import java.util.Formatter;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-public class ZipFormatter {
+public class ZipFormatter extends File implements Closeable, Flushable {
 
-    private File file = null;
     private ZipOutputStream zipOutputStream = null;
     private Formatter formatter = null;
 
-    public ZipFormatter(String fileName) throws FileNotFoundException {
-        this(new File(fileName));
+    public ZipFormatter(File file) throws FileNotFoundException {
+        this(file.getAbsolutePath());
     }
 
-    public ZipFormatter(File f) throws FileNotFoundException {
-        file = f;
-        FileOutputStream zipDest = new FileOutputStream(file);
-        zipOutputStream = new ZipOutputStream(new BufferedOutputStream(zipDest));
+    public ZipFormatter(String fileName) throws FileNotFoundException {
+        super(fileName);
+        initialize();
+    }
+    
+    public ZipFormatter(String parent, String fileName) throws FileNotFoundException {
+        super(parent, fileName);
+        initialize();
+    }
+    
+    public ZipFormatter(File parent, String fileName) throws FileNotFoundException {
+        super(parent, fileName);
+        initialize();
+    }
+    
+    private void initialize() throws FileNotFoundException {
+        FileOutputStream fos = new FileOutputStream(this);
+        zipOutputStream = new ZipOutputStream(new BufferedOutputStream(fos));
         formatter = new Formatter(zipOutputStream);
     }
 
@@ -31,10 +46,13 @@ public class ZipFormatter {
         return this;
     }
 
-    public void close() {
+    @Override
+    public void close() throws IOException {
+        closeEntry();
         formatter.close();
     }
 
+    @Override
     public void flush() {
         formatter.flush();
     }
@@ -42,6 +60,7 @@ public class ZipFormatter {
     public void closeEntry() throws IOException {
         formatter.flush();
         zipOutputStream.closeEntry();
+        zipOutputStream.flush();
     }
 
     public void putNextEntry(ZipEntry e) throws IOException {
@@ -54,23 +73,4 @@ public class ZipFormatter {
         putNextEntry(e);
     }
     
-    public File getFile(){
-        return file;
-    }
-
-    public String getFileName(){
-        return file.getAbsolutePath();
-    }
-
-    public String getName(){
-        return file.getName();
-    }
-
-    public String getParent(){
-        return file.getParent();
-    }
-
-    public File getParentFile(){
-        return file.getParentFile();
-    }
 }

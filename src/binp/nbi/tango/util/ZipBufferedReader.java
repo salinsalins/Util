@@ -16,6 +16,8 @@ import java.util.zip.ZipInputStream;
 public class ZipBufferedReader implements Closeable {
 
     private File file;
+    private boolean opened = false;
+
     private ZipInputStream zipInputStream;
     private ZipEntry zipEntry;
     private BufferedReader bufferedReader;
@@ -48,12 +50,17 @@ public class ZipBufferedReader implements Closeable {
         return file.getAbsolutePath();
     }
 
+    public boolean isOpened() {
+        return opened;
+    }
+
     public ZipBufferedReader(File f) throws FileNotFoundException {
         FileInputStream fis = new FileInputStream(f);
         zipInputStream = new ZipInputStream(new BufferedInputStream(fis));
         InputStreamReader isr = new InputStreamReader(zipInputStream);
         bufferedReader = new BufferedReader(isr);
         file = f;
+        opened = true;
         this.zipEntry = null;
     }
 
@@ -83,20 +90,25 @@ public class ZipBufferedReader implements Closeable {
         return zipEntry.getName();
     }
 
+    public String getEntryName() {
+        if (zipEntry == null) return null;
+        return zipEntry.getName();
+    }
+
     @Override
     public void close() throws IOException {
         bufferedReader.close();
         zipEntry = null;
-        //zipInputStream = null;
-        //bufferedReader = null;
+        opened = false;
     }
 
     public boolean findZipEntry(String entryName) {
-        if (entryName == null || "".equals(entryName)) {
+        //if (entryName == null || "".equals(entryName)) {
+        if (entryName == null) {
             return false;
         }
         try {
-            //reset();
+            //bufferedReader.reset();
             while (getNextEntry() != null) {
                 if (entryName.equals(zipEntry.getName())) {
                     return true;
