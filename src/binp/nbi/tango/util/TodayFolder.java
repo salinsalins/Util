@@ -15,23 +15,38 @@ import java.util.Date;
  */
 public class TodayFolder extends File {
     
-    TodayFolder(String fileName){
-        super(todayFolder(true), fileName);
+    TodayFolder(String baseDir, boolean make){
+        super(todayFolder(baseDir, make).getAbsolutePath());
     }
     
-    public static File todayFolder(boolean make) {
+    TodayFolder(String baseDir){
+        this(baseDir, true);
+    }
+    
+    TodayFolder(){
+        this(null, true);
+    }
+
+    public static File todayFolder(String baseDir, boolean make) {
         SimpleDateFormat ydf = new SimpleDateFormat("yyyy");
         SimpleDateFormat mdf = new SimpleDateFormat("yyyy-MM");
         SimpleDateFormat ddf = new SimpleDateFormat("yyyy-MM-dd");
         Date now = new Date();
-        File folder = new File(new File(ydf.format(now), mdf.format(now)), ddf.format(now));
+        File folder;
+        if (baseDir==null || "".equals(baseDir))
+            folder = new File(new File(ydf.format(now), mdf.format(now)), ddf.format(now));
+        else     {
+            File dir = new File(baseDir);
+            if (dir.isDirectory())
+                folder = new File(new File(new File(baseDir, ydf.format(now)), mdf.format(now)), ddf.format(now));
+            else
+                folder = new File(new File(ydf.format(now), mdf.format(now)), ddf.format(now));
+        }
         if (make) folder.mkdirs();
         return folder;
     }
     
     public static File todayFolder() {
-        return todayFolder(true);
+        return todayFolder(null, true);
     }
-
-    
 }
