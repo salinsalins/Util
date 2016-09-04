@@ -56,6 +56,18 @@ public class ZipFormatter extends File implements Closeable, Flushable {
     public void flush() {
         formatter.flush();
     }
+    
+    void write(byte[] b) throws IOException {
+        zipOutputStream.write(b);
+    }
+    
+    void write(byte[] b, int off, int len) throws IOException {
+        zipOutputStream.write(b, off, len);
+    }
+    
+    void write(int b) throws IOException {
+        zipOutputStream.write(b);
+    }
 
     public void closeEntry() throws IOException {
         formatter.flush();
