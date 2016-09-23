@@ -6,8 +6,8 @@ public interface Constants {
 	public static final String DEFAULT_DEV = "binp/nbi/adc0";
 	public static final int DEFAULT_AVG = 100;
 
-	public static final Double DEFAULT_MARK_X = Double.NaN;
-	public static final Double DEFAULT_MARK_Y = 0.0;
+	public static final Double DEFAULT_MARK_X_VALUE = Double.NaN;
+	public static final Double DEFAULT_MARK_Y_VALUE = 0.0;
 
 	public static final String PROP_VAL_DELIMETER = " = ";
 	public static final String PROP_VAL_DELIMETER_OLD = ": ";
