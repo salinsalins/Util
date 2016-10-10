@@ -9,10 +9,6 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- *
- * @author Sanin
- */
 public class TodayFolder extends File {
     
     public TodayFolder(String baseDir, boolean make){
