@@ -29,16 +29,14 @@ public class TodayFolder extends File {
         SimpleDateFormat ddf = new SimpleDateFormat("yyyy-MM-dd");
         Date now = new Date();
         File folder;
-        if (baseDir==null || "".equals(baseDir)) {
+        if (baseDir==null || baseDir.isEmpty()) {
             folder = new File(new File(ydf.format(now), mdf.format(now)), ddf.format(now));
         }
         else {
             File dir = new File(baseDir);
-            if (dir.isDirectory())
-                folder = new File(new File(new File(baseDir, ydf.format(now)), mdf.format(now)), ddf.format(now));
-            else
-                folder = new File(new File(new File(dir.getParentFile(), ydf.format(now)), mdf.format(now)), ddf.format(now));
-                //folder = new File(new File(ydf.format(now), mdf.format(now)), ddf.format(now));
+            if (!dir.isDirectory())
+                dir = dir.getParentFile();
+            folder = new File(new File(new File(dir, ydf.format(now)), mdf.format(now)), ddf.format(now));
         }
         if (make) folder.mkdirs();
         return folder;
