@@ -13,7 +13,11 @@ import java.util.zip.ZipOutputStream;
 
 public class ZipFormatter extends File implements Closeable, Flushable {
 
-    private ZipOutputStream zipOutputStream = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 177771L;
+	private ZipOutputStream zipOutputStream = null;
     private Formatter formatter = null;
 
     public ZipFormatter(File file) throws FileNotFoundException {
